@@ -1,15 +1,16 @@
 import socket
-HOST=socket.gethostname()
-PORT=123
-Message="Welcome"
-print("Host name : ",HOST)
-print("PORT: ",PORT)
-client_socket=socket.socket(socket.AF_INET,socket.SOCK_DGRAM)
-client_socket.sendto(Message.encode(),(HOST,PORT))
+UDP_HOST=socket.gethostname()
+UDP_PORT=5005
+Message="Welcome to CNS"
 
-reply,addr=client_socket.recvfrom(1024)
+print("UDP Host: ",UDP_HOST)
+print("UDP Port: ",UDP_PORT)
+print("Message: ",Message)
+
+client_server=socket.socket(socket.AF_INET,socket.SOCK_DGRAM)
+client_server.sendto(Message.encode(),(UDP_HOST,UDP_PORT))
+reply,addr=client_server.recvfrom(1024)
 print("Server: ",reply.decode())
-reply_message="Thank you for connecting"
-
-client_socket.sendto(reply_message.encode(),(HOST,PORT))
-client_socket.close()
+reply_mess="Thank you for connecting!"
+client_server.sendto(reply_mess.encode(),(UDP_HOST,UDP_PORT))
+client_server.close()

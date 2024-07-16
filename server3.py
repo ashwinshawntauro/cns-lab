@@ -1,18 +1,15 @@
 import socket
-HOST=socket.gethostname()
-PORT=123
-
-print("Host name: ",HOST)
-print("Port: ",PORT)
-print("IP address: ",socket.gethostbyname(HOST))
+UDP_HOST=socket.gethostname()
+UDP_PORT=5005  
+print("UDP Host: ",UDP_HOST)
+print("UDP Port: ",UDP_PORT)
+print("IP Address: ",socket.gethostbyname(UDP_HOST))
 server_socket=socket.socket(socket.AF_INET,socket.SOCK_DGRAM)
-server_socket.bind((HOST,PORT))
+server_socket.bind((UDP_HOST,UDP_PORT))
 while True:
-    data, addr =server_socket.recvfrom(1024)
-    print("Message Recieved: ",data.decode())
-    print("From: ",addr)
-    reply_message="Thanks for the Message!"
-    server_socket.sendto(reply_message.encode(),addr)
+    data,addr=server_socket.recvfrom(1024)
+    print("Client: ",data.decode())
+    server_socket.sendto(b"Thanks for the message",addr)
     data2,addr2=server_socket.recvfrom(1024)
-    print("Message Recieved: ",data2.decode())
-    print("From: ",addr2)
+    print("Client: ",data2.decode())
+    # server_socket.close()
